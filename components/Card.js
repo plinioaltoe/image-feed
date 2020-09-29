@@ -1,10 +1,13 @@
-import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
 import PropTypes from "prop-types"
 
 import AuthorRow from './AuthorRow'
 
 const Card = ({ fullName, linkText, onPressLinkText, image }) => {
+
+  const [loading, setLoading] = useState(true)
+
   return (
     <View>
       <AuthorRow
@@ -12,7 +15,16 @@ const Card = ({ fullName, linkText, onPressLinkText, image }) => {
         linkText={linkText}
         onPressLinkText={onPressLinkText}
       />
-      <Image style={styles.image} source={image} />
+      <View style={styles.image} >
+        {!!loading &&
+          <ActivityIndicator
+            style={StyleSheet.absoluteFill} />
+        }
+        <Image
+          style={StyleSheet.absoluteFill}
+          source={image}
+          onLoad={() => setLoading(false)} />
+      </View>
     </View>
   )
 }

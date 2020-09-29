@@ -14,7 +14,7 @@ export default function App() {
         fullName="Plinio Altoé"
         linkText="www.google.com"
         onPressLinkText={handleLink}
-        image={{ uri: "https://unsplash.it/600/600" }}
+        image={{ uri: "https://unsplash.it/500/300" }}
       />
       <StatusBar style="auto" />
     </View>
