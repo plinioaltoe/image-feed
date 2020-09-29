@@ -3,17 +3,18 @@ import React from 'react'
 import Constants from 'expo-constants'
 import { StyleSheet, View } from 'react-native'
 
-import AuthorRow from './components/AuthorRow'
+import Card from './components/Card'
 
 export default function App() {
 
-  const handleLink = () => { console.log("YAHOO") }
+  const handleLink = () => { console.log("yes") }
   return (
     <View style={styles.container}>
-      <AuthorRow
-        fullName="Plinio Altoe"
+      <Card
+        fullName="Plinio Altoé"
         linkText="www.google.com"
         onPressLinkText={handleLink}
+        image={{ uri: "https://unsplash.it/600/600" }}
       />
       <StatusBar style="auto" />
     </View>
