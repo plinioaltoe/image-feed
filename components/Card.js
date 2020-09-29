@@ -33,14 +33,14 @@ export default Card
 
 Card.propTypes = {
   fullName: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
-  onPressLinkText: PropTypes.func.isRequired,
+  linkText: PropTypes.string,
+  onPressLinkText: PropTypes.func,
   image: Image.propTypes.source.isRequired
 }
 
 Card.defaultProps = {
-  linkText: "",
-  onPressLinkText: () => { }
+  linkText: "Comments",
+  onPressLinkText: () => { console.log('hahah') }
 }
 
 const styles = StyleSheet.create({

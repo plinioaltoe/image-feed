@@ -15,7 +15,7 @@ const AuthorRow = ({ fullName, linkText, onPressLinkText }) => {
         backgroundColor={getAvatarColor(fullName)} />
       <Text style={styles.text}>{fullName}</Text>
       {!!linkText &&
-        <TouchableOpacity onPress={onPressLinkText}>
+        <TouchableOpacity onPress={onPressLinkText} >
           <Text style={styles.text} numberOfLines={1}>{linkText}</Text>
         </TouchableOpacity>
       }
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
 
   text: {
     flex: 1,
+    textAlignVertical: "center",
     marginHorizontal: 6,
-    color: "white"
+    color: "#000",
   }
 })

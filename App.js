@@ -3,19 +3,23 @@ import React from 'react'
 import Constants from 'expo-constants'
 import { StyleSheet, View } from 'react-native'
 
-import Card from './components/Card'
+import CardList from './components/CardList'
+
+const items = [
+  {
+    id: 0,
+    author: "Jorge Jesus",
+  },
+  {
+    id: 1,
+    author: "Alberto Roberto"
+  }
+]
 
 export default function App() {
-
-  const handleLink = () => { console.log("yes") }
   return (
     <View style={styles.container}>
-      <Card
-        fullName="Plinio Altoé"
-        linkText="www.google.com"
-        onPressLinkText={handleLink}
-        image={{ uri: "https://unsplash.it/500/300" }}
-      />
+      <CardList items={items} />
       <StatusBar style="auto" />
     </View>
   );
@@ -24,7 +28,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     marginTop: Constants.statusBarHeight
   },
 });
