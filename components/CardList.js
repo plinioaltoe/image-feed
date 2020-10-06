@@ -7,19 +7,27 @@ import { getImageFromId } from '../utils/api'
 
 const keyExtractor = ({ id }) => id.toString();
 
-const renderItem = ({ item: { id, author } }) => (
-  <Card
-    fullName={author}
-    image={{ uri: getImageFromId(id) }}
-  />
-)
+const CardList = ({ items, commentsForItem, onPressComment }) => {
 
-const CardList = ({ items }) => {
+  const renderItem = ({ item: { id, author } }) => {
+
+    const comments = commentsForItem[id]
+    return (
+      <Card
+        fullName={author}
+        image={{ uri: getImageFromId(id) }}
+        linkText={`${comments ? comments.length : 0} Comments`}
+        onPressLinkText={() => onPressComment(id)}
+      />
+    )
+  }
+
   return (
     <FlatList
       data={items}
       renderItem={renderItem}
-      keyExtractor={keyExtractor}>
+      keyExtractor={keyExtractor}
+      extraData={commentsForItem}>
     </FlatList>
   )
 }

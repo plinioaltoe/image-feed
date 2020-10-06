@@ -1,29 +1,62 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, { useState } from 'react'
 import Constants from 'expo-constants'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform, Modal } from 'react-native'
 
-import CardList from './components/CardList'
-
-const items = [
-  {
-    id: 0,
-    author: "Jorge Jesus",
-  },
-  {
-    id: 1,
-    author: "Alberto Roberto"
-  }
-]
+import Feed from './screens/Feed'
+import Comments from './screens/Comments'
 
 export default function App() {
+
+  const [commentsForItem, setCommentsForItem] = useState({})
+  const [showModal, setShowModal] = useState(false)
+  const [selectedItemId, setSelectedItemId] = useState(null)
+
+  const openCommentsScreen = id => {
+    setShowModal(true)
+    setSelectedItemId(id)
+  }
+
+  const closeCommentsScreen = () => {
+    setShowModal(false)
+    setSelectedItemId(null)
+  }
+
+  const onSubmitComment = text => {
+    const comments = commentsForItem[selectedItemId] || []
+    const updated = {
+      ...commentsForItem,
+      [selectedItemId]: [...comments, text]
+    }
+    setCommentsForItem(updated)
+  }
+
   return (
     <View style={styles.container}>
-      <CardList items={items} />
+      <Feed
+        style={styles.feed}
+        commentsForItem={commentsForItem}
+        onPressComment={openCommentsScreen} />
+      <Modal
+        visible={showModal}
+        animationType="slide"
+        onRequestClose={closeCommentsScreen}>
+        <Comments
+          style={styles.comment}
+          comments={commentsForItem[selectedItemId] || []}
+          onClose={closeCommentsScreen}
+          onSubmitComment={onSubmitComment}>
+
+        </Comments>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );
 }
+
+const plataformVersion = Platform.OS === "ios"
+  ? parseInt(Platform.Version, 10)
+  : Platform.Version
 
 const styles = StyleSheet.create({
   container: {
@@ -31,4 +64,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: Constants.statusBarHeight
   },
+  feed: {
+    flex: 1,
+    marginTop: Platform.OS === 'android' || plataformVersion < 11
+      ? Constants.statusBarHeight
+      : 0,
+  },
+  comment: {
+    flex: 1,
+    marginTop: Platform.OS === 'android' || plataformVersion < 11
+      ? Constants.statusBarHeight
+      : 0,
+  }
 });
