@@ -2,11 +2,11 @@ import React from 'react'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import PropTypes from "prop-types"
 
-const renderItem = (comment, index) => {
+const renderItem = (comment, index) => (
   <View key={index} style={styles.comments}>
     <Text>{comment}</Text>
   </View>
-}
+)
 
 const CommentList = ({ comments }) => {
   return (

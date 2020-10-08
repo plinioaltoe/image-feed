@@ -8,7 +8,7 @@ import { getImageFromId } from '../utils/api'
 const keyExtractor = ({ id }) => id.toString();
 
 const CardList = ({ items, commentsForItem, onPressComment }) => {
-
+  
   const renderItem = ({ item: { id, author } }) => {
 
     const comments = commentsForItem[id]
@@ -40,7 +40,9 @@ CardList.propTypes = {
       id: PropTypes.number.isRequired,
       author: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  commentsForItem: PropTypes.object.isRequired,
+  onPressComment: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({})

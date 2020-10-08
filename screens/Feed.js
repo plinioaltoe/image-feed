@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ViewPropTypes, ActivityIndicator } from 'react-native'
-
+import PropTypes from "prop-types"
 import CardList from '../components/CardList'
 import { fetchImages } from "../utils/api"
 
@@ -14,6 +14,8 @@ export default class Feed extends Component {
 
   static propTypes = {
     style: ViewPropTypes.style,
+    commentsForItem: PropTypes.object.isRequired,
+    onPressComment: PropTypes.func.isRequired
   }
 
 
