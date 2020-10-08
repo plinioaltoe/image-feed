@@ -7,8 +7,8 @@ import { getImageFromId } from '../utils/api'
 
 const keyExtractor = ({ id }) => id.toString();
 
-const CardList = ({ items, commentsForItem, onPressComment }) => {
-  
+const CardList = ({ items, commentsForItem, onPressComment, onRefresh }) => {
+
   const renderItem = ({ item: { id, author } }) => {
 
     const comments = commentsForItem[id]
@@ -24,11 +24,13 @@ const CardList = ({ items, commentsForItem, onPressComment }) => {
 
   return (
     <FlatList
+      refreshing={false}
       data={items}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
-      extraData={commentsForItem}>
-    </FlatList>
+      extraData={commentsForItem}
+      onRefresh={onRefresh}
+    />
   )
 }
 
@@ -42,7 +44,8 @@ CardList.propTypes = {
     })
   ).isRequired,
   commentsForItem: PropTypes.object.isRequired,
-  onPressComment: PropTypes.func.isRequired
+  onPressComment: PropTypes.func.isRequired,
+  onRefresh: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({})

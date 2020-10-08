@@ -36,6 +36,20 @@ export default function App() {
     setSelectedItemId(null)
   }
 
+  const clearComments = async () => {
+    const updated = {
+      ...commentsForItem,
+      [selectedItemId]: []
+    }
+    try {
+      await AsyncStorage.setItem(ASYNC_STORAGE_COMMENTS_KEY, JSON.stringify(updated))
+    } catch (error) {
+      console.log('ocorreu erro ao limpar comentários')
+    }
+
+    setCommentsForItem(updated)
+  }
+
   const onSubmitComment = async text => {
     const comments = commentsForItem[selectedItemId] || []
     const updated = {
@@ -52,6 +66,16 @@ export default function App() {
     setCommentsForItem(updated)
   }
 
+  const handleRefresh = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch (error) {
+      console.log('ocorreu erro ao apagar tudo')
+    }
+
+    setCommentsForItem({})
+  }
+
   const ASYNC_STORAGE_COMMENTS_KEY = "ASYNC_STORAGE_COMMENTS_KEY"
 
   return (
@@ -59,7 +83,8 @@ export default function App() {
       <Feed
         style={styles.feed}
         commentsForItem={commentsForItem}
-        onPressComment={openCommentsScreen} />
+        onPressComment={openCommentsScreen}
+        onRefresh={handleRefresh} />
       <Modal
         visible={showModal}
         animationType="slide"
@@ -68,8 +93,10 @@ export default function App() {
           style={styles.comment}
           comments={commentsForItem[selectedItemId] || []}
           onClose={closeCommentsScreen}
-          onSubmitComment={onSubmitComment}>
-
+          onSubmitComment={onSubmitComment}
+          id={selectedItemId}
+          onClear={clearComments}
+        >
         </Comments>
       </Modal>
       <StatusBar style="auto" />

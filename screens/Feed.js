@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ViewPropTypes, ActivityIndicator } from 'react-native'
+import { Text, View, ViewPropTypes, ActivityIndicator } from 'react-native'
 import PropTypes from "prop-types"
 import CardList from '../components/CardList'
 import { fetchImages } from "../utils/api"
@@ -15,7 +15,8 @@ export default class Feed extends Component {
   static propTypes = {
     style: ViewPropTypes.style,
     commentsForItem: PropTypes.object.isRequired,
-    onPressComment: PropTypes.func.isRequired
+    onPressComment: PropTypes.func.isRequired,
+    onRefresh: PropTypes.func.isRequired
   }
 
 
@@ -33,7 +34,7 @@ export default class Feed extends Component {
 
 
   render() {
-    const { style, commentsForItem, onPressComment } = this.props
+    const { style, commentsForItem, onPressComment, onRefresh } = this.props
     const { items, loading, error } = this.state
 
     if (loading) {
@@ -47,7 +48,8 @@ export default class Feed extends Component {
       <View style={style.container}>
         <CardList items={items}
           commentsForItem={commentsForItem}
-          onPressComment={onPressComment} />
+          onPressComment={onPressComment}
+          onRefresh={onRefresh} />
       </View>
     )
   }
